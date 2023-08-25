@@ -1,9 +1,18 @@
 from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
+from random import choice
+from webbrowser import open as o
+
+#Load All labels of companies
+s=open('static\\text\\dataset_company-symbols.txt')
+data=s.read().split(',')
+s.close()
+
 #Some importants commands
 def fetch_stock(symbol,stock_exchange='NSE'):
     url = f"https://www.google.com/finance/quote/{symbol}:{stock_exchange}"
+    requests.get(url)
     response = requests.get(url)
     html_content = response.content
     soup = BeautifulSoup(html_content, "html.parser")
@@ -16,18 +25,25 @@ def fetch_stock(symbol,stock_exchange='NSE'):
 
     class_name = "P6K39c"
     elements = soup.find_all(class_=class_name) 
-    data['prev_close']=elements[0].get_text()
-    data['day_range']=elements[1].get_text()
-    data['year_range']=elements[2].get_text()
-    data['market_cap']=elements[3].get_text()
-    data['pe_ratio']=elements[4].get_text()
-    data['div_yield']=data['div_yield'][36:]
+    try:
+        data['prev_close']=elements[0].get_text()
+        data['day_range']=elements[1].get_text()
+        data['year_range']=elements[2].get_text()
+        data['market_cap']=elements[3].get_text()
+        data['pe_ratio']=elements[4].get_text()
+        data['div_yield']=data['div_yield'][36:]
+    except:
+        pass
     return data
 
 
 # Create your views here.
-def home(request):
-    data=fetch_stock('INDSWFTLAB')
-    print(data)
+def home(request,data=data):
+    
+    s=str(choice(data))[1:]
+    s=s.replace('"','')
+    print(s)
+    print(fetch_stock(s)['stock_name']==None)
+    data=fetch_stock(s)
     parms={'stock_detail':data}
     return render(request,'home/index.html',parms)
