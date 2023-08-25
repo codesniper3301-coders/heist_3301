@@ -30,4 +30,4 @@ def home(request):
     data=fetch_stock('INDSWFTLAB')
     print(data)
     parms={'stock_detail':data}
-    return render(request,'home/index.html',parms)
+    return render(request,'home/index1.html',parms)
