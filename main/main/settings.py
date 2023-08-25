@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'accounts',
+    'channels',
+    'graph',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +58,9 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [f'{BASE_DIR}/templates'],
+        'DIRS': [f'{BASE_DIR}/templates',
+                 BASE_DIR.joinpath('templates')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
