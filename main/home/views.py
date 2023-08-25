@@ -4,21 +4,21 @@ from bs4 import BeautifulSoup
 from random import choice
 from django.http import JsonResponse
 
+l=[]
 #Load All labels of companies
 s=open('static\\text\\dataset_company-symbols.txt')
 data=s.read().split(',')
 s.close()
-l=[0]
 #Some importants commands
-def get_stock_price(request,symbol='TCS',stock_exchange='NSE'):
+def get_stock_price(request,stock_exchange='NSE'):
+    symbol=l[-1]
     url = f"https://www.google.com/finance/quote/{symbol}:{stock_exchange}"
     requests.get(url)
     response = requests.get(url)
     html_content = response.content
     soup = BeautifulSoup(html_content, "html.parser")
     data_element = soup.find("div", class_='YMlKec fxKbKc')
-    l[0]+=1
-    return JsonResponse({'stock_price': l[0]})
+    return JsonResponse({'stock_price': data_element.get_text()})
 
 
     
@@ -53,11 +53,9 @@ def fetch_stock(symbol,stock_exchange='NSE'):
 # Create your views here.
 def home(request,data=data):
     
-    # s=str(choice(data))[1:]
-    # s=s.replace('"','')
-    # print(s)
-    # print(fetch_stock(s)['stock_name']==None)
-    s='TCS'
+    s=str(choice(data))[1:]
+    s=s.replace('"','')
     data=fetch_stock(s)
+    l.append(s)
     parms={'stock_detail':data}
     return render(request,'home/index1.html',parms)
