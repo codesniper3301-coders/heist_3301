@@ -224,6 +224,11 @@
 </head>
 
 <body>
+    {%if order_pass%}
+    <p style="color:green"></p>
+    {%endif%}
+    <form action="" method="post">
+        {%csrf_token%}
     <div class="container">
         <div class="nav-bar">
             <div class="icons">
@@ -275,14 +280,14 @@
                     </div>
                 </div>
                 <div class="buy-sell-container">
-                    <button class="buy">Buy</button>
+                    <input type="text" name="fraction_stock" id="">
+                    <button type="submit"  class="buy">Buy</button>
                     <button class="sell">Sell</button>
                 </div>
             </div>
-
         </div>
     </div>
-
+</form>
     <div class="modal">
         <i class="fa-solid fa-xmark cancel"></i>
         <div class="units">

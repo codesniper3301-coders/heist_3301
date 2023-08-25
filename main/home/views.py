@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from random import choice
 from django.http import JsonResponse
+from home.models import buffer,portfolio
 
 l=[]
 #Load All labels of companies
@@ -10,6 +11,9 @@ s=open('static\\text\\dataset_company-symbols.txt')
 data=s.read().split(',')
 s.close()
 #Some importants commands
+def get_buffer(symbol):
+    data=buffer.objects.filter(symbol=symbol)
+    return data.buffer
 def get_stock_price(request,stock_exchange='NSE'):
     symbol=l[-1]
     url = f"https://www.google.com/finance/quote/{symbol}:{stock_exchange}"
@@ -58,4 +62,24 @@ def home(request,data=data):
     data=fetch_stock(s)
     l.append(s)
     parms={'stock_detail':data}
+    print(buffer.objects.all())
+    try:
+        buffer_data=buffer.objects.filter(symbol=s)
+        buffer_num=buffer_data.buffer
+    except:
+        buffer_data=buffer(symbol=s,price_bought=0,buffer=0)
+        buffer_num=0
+        buffer_data.save()
+    if request.method == 'POST':
+        fraction_stock=request.POST.get('fraction_stock')
+        print(fraction_stock)
+        SI=int(fraction_stock)
+        # if SI+buffer_num>fraction_stock:
+        buffer_data=buffer(symbol=s,buffer=SI+buffer_num-fraction_stock)
+        buffer_data.save()
+        portfolio_data=portfolio(symbol=s,price_bought=get_stock_price(s)['stock_price'],fraction_bought=fraction_stock)        
+        portfolio_data.save()
+        parms['order_passes']=True
+        
+
     return render(request,'home/index1.html',parms)
