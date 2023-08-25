@@ -1,7 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 
-# Create your views here.
-from django.urls import path
-urlpatterns = [
-    
-]
+def graph(request):
+    return HttpResponse('graph')
