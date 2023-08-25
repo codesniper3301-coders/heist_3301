@@ -76,6 +76,10 @@
             border-top: 1px solid;
         }
 
+        .none{
+            color: red;
+        }
+
         @media only screen and (max-width:800px){
             .container{
                 display: block;
@@ -88,10 +92,10 @@
     <h1 class="heading">StockSlice</h1>
     <div class="container">
         <div class="left-column">
-            <div class="com-name"><span>{{stock_detail.stock_name}}</span></div>
-            <div class="rates"><span class="stock-price">{{stock_detail.stock_price}}</span>
-                <span class="toggle-per">{{stock_detail.toggle_per}}</span>
-                <span class="current-price">{{stock_detail.current_price}}</span>
+            <div class="com-name"><span>{{stock_name}}</span></div>
+            <div class="rates"><span class="stock-price">{{stock_price}}</span>
+                <span class="toggle-per">{{toggle_per}}</span>
+                <span class="current-price">{{current_price}}</span>
             </div>
         </div>
         <div class="right-column">
@@ -120,6 +124,13 @@
             </div>
         </div>
     </div>
+    <script>
+        let none = document.getElementById("current-price").value;
+        if (none === "None") {
+            none.innerHTML = "Market Closed" 
+            none.classlist.add("none")           
+        }
+    </script>
 </body>
 
 </html>
