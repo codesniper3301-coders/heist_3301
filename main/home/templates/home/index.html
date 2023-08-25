@@ -68,20 +68,20 @@
             padding: 10px;
         }
 
-        .line{
+        .line {
             border-bottom: 1px solid;
         }
 
-        .prev-close-box{
+        .prev-close-box {
             border-top: 1px solid;
         }
 
-        .none{
+        .none {
             color: red;
         }
 
-        @media only screen and (max-width:800px){
-            .container{
+        @media only screen and (max-width:800px) {
+            .container {
                 display: block;
             }
         }
@@ -124,11 +124,13 @@
         </div>
     </div>
     <script>
-        let none = document.getElementById("current-price").value;
-        if (none === "None") {
-            none.innerHTML = "Market Closed" 
-            none.classlist.add("none")           
+        let currentPriceElement = document.getElementById("current-price");
+        let currentPriceText = currentPriceElement.textContent;
+        if (currentPriceText === "None") {
+            currentPriceElement.textContent = "Market Closed";
+            currentPriceElement.classList.add("none");
         }
+
     </script>
 </body>
 
