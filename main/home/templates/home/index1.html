@@ -14,7 +14,7 @@
             box-sizing: border-box;
             outline: none;
             transition: all 0.3s;
-            color: white;
+            color: rgb(13, 227, 13);
         }
 
         body,
@@ -27,13 +27,14 @@
 
         .container {
             display: grid;
-            grid-template-columns: 4vw 96vw;
+            grid-template-columns: 5vw 95vw;
             grid-template-rows: 100vh 100vh;
             height: 100vh;
         }
 
         .nav-bar {
-            border-right: 1px solid;
+            border-right: 3px solid rgb(21, 21, 21);
+            padding: 0px 20px 0px 15px;
         }
 
         .nav-bar .icons {
@@ -43,17 +44,27 @@
             padding: 5px;
             height: 30vh;
             justify-content: space-around;
+            margin: 5px;
         }
+
+        
 
         .icon {
             text-align: center;
             padding: 5px;
             width: 40px;
             height: 40px;
-            border: 1px solid rgb(133, 133, 133);
+            border: 1px solid rgb(9, 122, 32);
             border-radius: 50%;
             padding-top: 10px;
-            color: rgb(133, 133, 133);
+            color: rgb(17, 120, 8);
+            cursor: pointer;
+        }
+
+        .icon:hover{
+            color: rgb(46, 46, 46);
+            border-color: rgb(57, 57, 57);
+            background-color: rgb(17, 120, 8);
         }
 
         .stock-info {
@@ -80,14 +91,14 @@
 
         .stock-container {
             display: grid;
-            grid-template-columns: 50% 50%;
+            grid-template-columns: 60% 40%;
             grid-template-rows: 100vh 100vh;
             padding-top: 15px;
-            padding: 15px;
+            padding: 25px;
         }
 
         .graph-display {
-            border: 1px solid;
+            border: 4px solid rgb(75, 74, 74);
             height: 62vh;
             width: 100%;
         }
@@ -98,19 +109,28 @@
 
         .toggle-per{
             border-radius: 5px;
-            background-color: rgb(244, 145, 145);
-            color: rgb(200, 8, 8);
+            /* background-color: rgb(244, 145, 145); */
+            /* color: white; */
             padding: 2px;
+        }
+
+        .stock-info *{
+            color: green;
+        }
+
+
+        .stock-details-container{
+            text-align: right;
+            padding-left: 80px;
         }
 
 
 
         .right-column {
             padding: 10px 5px;
-            border: 1px solid rgb(193, 190, 190);
+            border: 1px solid rgb(82, 82, 82);
             border-radius: 5px;
-            width: 65%;
-            margin: auto;
+            width: fit-content;
         }
 
         .right-column * {
@@ -118,7 +138,7 @@
         }
 
         .line {
-            border-bottom: 1px solid gray;
+            border-bottom: 1px solid rgb(88, 88, 88);
             display: flex;
             justify-content: space-around;
         }
@@ -149,17 +169,19 @@
             margin: 10px;
             cursor: pointer;
             border: none;
-            background-color: rgb(40, 40, 40);
+            background-color: greenyellow;
             border-radius: 8px;
         }
         
         .buy:hover,
         .sell:hover {
-            background-color: rgb(24, 24, 24);
+            background-color: rgb(40, 40, 40);
+            color: greenyellow;
         }
 
         .buy {
-            color: greenyellow;
+            color: rgb(40, 40, 40);
+            display: block;
         }
 
         .sell {
@@ -276,7 +298,6 @@
                 </div>
                 <div class="buy-sell-container">
                     <button class="buy">Buy</button>
-                    <button class="sell">Sell</button>
                 </div>
             </div>
 

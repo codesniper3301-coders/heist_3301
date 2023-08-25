@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Graph</title>
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Create a canvas element to render the graph -->
+    <canvas id="liveGraph"></canvas>
+    <script >
+        // Initialize arrays to store data
+var xData = [];
+var yData = [];
+
+// Get canvas element and create a chart
+var ctx = document.getElementById('liveGraph').getContext('2d');
+var liveChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: xData,
+        datasets: [{
+            label: 'Live Data',
+            data: yData,
+            borderColor: 'blue',
+            backgroundColor: 'rgba(0, 0, 255, 0.1)',
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    unit: 'second',
+                    tooltipFormat: 'll HH:mm:ss'
+                },
+                title: {
+                    display: true,
+                    text: 'Time'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Value'
+                }
+            }
+        }
+    }
+});
+
+// Function to update the graph
+function updateGraph() {
+    setInterval(function() {
+        xData.push(new Date());
+        yData.push(Math.floor(Math.random() * 11));  // Random value between 0 and 10
+        if (xData.length > 10) {
+            xData.shift();
+            yData.shift();
+        }
+        liveChart.update();
+    }, 1000); // Update every 1 second
+}
+
+// Call the updateGraph function to start updating the graph
+updateGraph();
+
+    </script>
+</body>
+</html>
