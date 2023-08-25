@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/394111977c.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 4vw 96vw;
+            grid-template-rows: 100vh 100vh;
+            height: 100vh;
+        }
+
+        .nav-bar{
+            border-right: 1px solid;
+        }
+
+        .nav-bar .icons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            height: 30vh;
+            justify-content: space-around;
+        }
+        
+        .icon {
+            text-align: center;
+            padding: 5px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgb(5, 5, 81);
+            border-radius: 50%;
+            padding-top: 10px;
+            color: rgb(5, 5, 81);
+        }
+
+        .stock-info{
+            padding-top: 20px;
+        }
+        
+        .stock-name-value{
+            font-size: 25px;
+        }
+        .stock-name{
+            padding: 10px 0px;
+            
+        }
+
+        .stock-price-value{
+            font-size: 30px;
+        }
+        .stock-price{
+            padding: 10px 0px;
+            
+        }
+        
+        .stock-container{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-template-rows: 100vh 100vh;
+            padding-top: 15px;
+            padding: 15px;
+        }
+        
+        .graph-display{
+            border: 1px solid;
+            height: 62vh;
+            width: 100%;
+        }
+
+        .right-column {
+            padding: 10px 5px;
+            border: 1px solid rgb(193, 190, 190);
+            border-radius: 5px;
+            width: 70%;
+            margin: auto;
+        }
+
+        .right-column * {
+            padding: 10px;
+        }
+
+        .line {
+            border-bottom: 1px solid;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .div-yield-box{
+            border: 0px;
+        }
+
+        .none {
+            color: red;
+        }
+
+        .buy-sell-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* align-items: center; */
+            padding: 10px 0px;
+        }
+
+        .buy, .sell{
+            display: block;
+            padding: 10px 80px;
+            font-size: larger;
+            width: fit-content;
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: black;
+            border-radius: 8px;
+        }
+        
+        .buy:hover, .sell:hover{
+            background-color: rgb(40, 40, 40);
+        }
+        
+        .buy{
+            color: greenyellow;
+        }
+
+        .sell{
+            color: red;
+        }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="icons">
+                <i class="fa-solid fa-magnifying-glass icon"></i>
+                <i class="fa-solid fa-info icon"></i>
+                <i class="fa-solid fa-indian-rupee-sign icon"></i>
+            </div>
+        </div>
+        <div class="stock-container">
+            <div class="graph-info-container">
+                <canvas id="graph-display" class="graph-display"></canvas>
+                <div class="stock-info">
+                    <div class="stock-name-"><span class="stock-name-value">{{stock_detail.stock_name}}</span></div>
+                    <div class="stock-price"><span class="stock-price-value" id="current-price">{{stock_detail.current_price}}</span></div>
+                </div>
+            </div>
+
+            <!-- All details of  the stock -->
+
+            <div class="stock-details-container">
+                <div class="right-column">
+                    <div class="prev-close-box line">
+                        <span class="prev-close">Previous Close</span>
+                        <span class="prev-close-value">{{stock_detail.prev_close}}</span>
+                    </div>
+                    <div class="day-range-box line"><span class="day-range-value">Day Range</span><span
+                            class="day-range">{{stock_detail.day_range}}</span>
+                    </div>
+                    <div class="year-range-box line">
+                        <span class="year-range-value">Year Range</span>
+                        <span class="year-range">{{stock_detail.year_range}}</span>
+                    </div>
+                
+                    <div class="market-cap-box line">
+                        <span class="market-cap-value">Market Cap</span>
+                        <span class="market-cap">{{stock_detail.market_cap}}</span>
+                    </div>
+                    <div class="pre-ratio-box line">
+                        <span class="pe-ratio-value">P/E Ratio</span>
+                        <span class="pe-ratio">{{stock_detail.pe_ratio}}</span>
+                    </div>
+                    <div class="div-yield-box line"><span class="div-yield-value">Dividend Yield</span>
+                        <span class="div-yield">{{stock_detail.div_yield}}</span>
+                    </div>
+                </div> 
+                <div class="buy-sell-container">
+                    <button class="buy">Buy</button>
+                    <button class="sell">Sell</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- -->

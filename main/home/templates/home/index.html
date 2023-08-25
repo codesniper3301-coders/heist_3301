@@ -80,6 +80,13 @@
             color: red;
         }
 
+        .dot {
+            width: 1px;
+            height: 1px;
+            border-radius: 50%;
+            color: red;
+        }
+
         @media only screen and (max-width:800px) {
             .container {
                 display: block;
@@ -95,7 +102,7 @@
             <div class="com-name"><span>{{stock_detail.stock_name}}</span></div>
             <div class="rates"><span class="stock-price">{{stock_price}}</span>
                 <span class="toggle-per">{{stock_detail.toggle_per}}</span>
-                <span class="current-price">{{stock_detail.current_price}}</span>
+                <span class="current-price" id="current-price">{{stock_detail.current_price}}</span>
             </div>
         </div>
         <div class="right-column">
@@ -110,7 +117,7 @@
                 <span class="year-range-value">Year Range</span>
                 <span class="year-range">{{stock_detail.year_range}}</span>
             </div>
-            
+
             <div class="market-cap-box line">
                 <span class="market-cap-value">Market Cap</span>
                 <span class="market-cap">{{stock_detail.market_cap}}</span>
@@ -130,7 +137,11 @@
         if (currentPriceText === "None") {
             currentPriceElement.textContent = "Market Closed";
             currentPriceElement.classList.add("none");
+            let div = document.createElement("div"); // Corrected this line
+            div.className = "dot"; // Corrected this line
+            currentPriceElement.appendChild(div);
         }
+
 
     </script>
 </body>
