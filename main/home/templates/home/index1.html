@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://kit.fontawesome.com/394111977c.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,15 +14,17 @@
             box-sizing: border-box;
             outline: none;
             transition: all 0.3s;
+            color: white;
         }
-        
+
         body,
         html {
             width: 100vw;
             height: 100vh;
             overflow-x: hidden;
+            background-color: black;
         }
-        
+
         .container {
             display: grid;
             grid-template-columns: 4vw 96vw;
@@ -29,7 +32,7 @@
             height: 100vh;
         }
 
-        .nav-bar{
+        .nav-bar {
             border-right: 1px solid;
         }
 
@@ -41,57 +44,72 @@
             height: 30vh;
             justify-content: space-around;
         }
-        
+
         .icon {
             text-align: center;
             padding: 5px;
             width: 40px;
             height: 40px;
-            border: 1px solid rgb(5, 5, 81);
+            border: 1px solid rgb(133, 133, 133);
             border-radius: 50%;
             padding-top: 10px;
-            color: rgb(5, 5, 81);
+            color: rgb(133, 133, 133);
         }
 
-        .stock-info{
+        .stock-info {
             padding-top: 20px;
         }
-        
-        .stock-name-value{
+
+        .stock-name-value {
             font-size: 25px;
         }
-        .stock-name{
+
+        .stock-name {
             padding: 10px 0px;
-            
+
         }
 
-        .stock-price-value{
+        .stock-price-value {
             font-size: 30px;
         }
-        .stock-price{
+
+        .stock-price {
             padding: 10px 0px;
-            
+
         }
-        
-        .stock-container{
+
+        .stock-container {
             display: grid;
             grid-template-columns: 50% 50%;
             grid-template-rows: 100vh 100vh;
             padding-top: 15px;
             padding: 15px;
         }
-        
-        .graph-display{
+
+        .graph-display {
             border: 1px solid;
             height: 62vh;
             width: 100%;
         }
 
+        .stock-price, .toggle-per{
+            font-size: larger;
+        }
+
+        .toggle-per{
+            border-radius: 5px;
+            background-color: rgb(244, 145, 145);
+            color: rgb(200, 8, 8);
+            padding: 2px;
+        }
+
+
+
         .right-column {
             padding: 10px 5px;
             border: 1px solid rgb(193, 190, 190);
             border-radius: 5px;
-            width: 70%;
+            width: 65%;
             margin: auto;
         }
 
@@ -100,12 +118,12 @@
         }
 
         .line {
-            border-bottom: 1px solid;
+            border-bottom: 1px solid gray;
             display: flex;
             justify-content: space-around;
         }
 
-        .div-yield-box{
+        .div-yield-box {
             border: 0px;
         }
 
@@ -113,15 +131,16 @@
             color: red;
         }
 
-        .buy-sell-container{
+        .buy-sell-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* align-items: center; */
+            align-items: center;
             padding: 10px 0px;
         }
 
-        .buy, .sell{
+        .buy,
+        .sell {
             display: block;
             padding: 10px 80px;
             font-size: larger;
@@ -130,30 +149,86 @@
             margin: 10px;
             cursor: pointer;
             border: none;
-            background-color: black;
+            background-color: rgb(40, 40, 40);
             border-radius: 8px;
         }
         
-        .buy:hover, .sell:hover{
-            background-color: rgb(40, 40, 40);
+        .buy:hover,
+        .sell:hover {
+            background-color: rgb(24, 24, 24);
         }
-        
-        .buy{
+
+        .buy {
             color: greenyellow;
         }
 
-        .sell{
+        .sell {
             color: red;
         }
-        </style>
+
+
+
+
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(41, 41, 41);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cancel{
+            /* display: inline-block; */
+            width: fit-content;
+            float: right;
+            cursor: pointer;
+        }
+
+        .buy-sell {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .buy-sell-button {
+            padding: 8px 36px;
+            font-size: larger;
+            border: none;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 1);
+
+
+        }
+
+        .units{
+            display: flex;
+            width: 100%;
+        }
+
+        .units span{
+            font-size: larger;
+        }
+
+        .unit-value{
+            border-style: solid;
+            border-width: 1px;
+            padding: 5px;
+            background-color: black;
+            color: whitesmoke;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <div class="nav-bar">
             <div class="icons">
-                <i class="fa-solid fa-magnifying-glass icon"></i>
                 <i class="fa-solid fa-info icon"></i>
+                <i class="fa-solid fa-magnifying-glass icon"></i>
                 <i class="fa-solid fa-indian-rupee-sign icon"></i>
             </div>
         </div>
@@ -162,7 +237,12 @@
                 <canvas id="graph-display" class="graph-display"></canvas>
                 <div class="stock-info">
                     <div class="stock-name-"><span class="stock-name-value">{{stock_detail.stock_name}}</span></div>
-                    <div class="stock-price"><span class="stock-price-value" id="current-price">{{stock_detail.current_price}}</span></div>
+                    <div class="stock-price">
+                        <span class="stock-price" id="stock-price">{{stock_detail.stock_price}}</span>
+                        <span class="toggle-per">{{stock_detail.toggle_per}}</span>
+                        <span class="stock-price-value" id="current-price">{{stock_detail.current_price}}</span>
+                    </div>
+
                 </div>
             </div>
 
@@ -181,7 +261,7 @@
                         <span class="year-range-value">Year Range</span>
                         <span class="year-range">{{stock_detail.year_range}}</span>
                     </div>
-                
+
                     <div class="market-cap-box line">
                         <span class="market-cap-value">Market Cap</span>
                         <span class="market-cap">{{stock_detail.market_cap}}</span>
@@ -193,15 +273,116 @@
                     <div class="div-yield-box line"><span class="div-yield-value">Dividend Yield</span>
                         <span class="div-yield">{{stock_detail.div_yield}}</span>
                     </div>
-                </div> 
+                </div>
                 <div class="buy-sell-container">
                     <button class="buy">Buy</button>
                     <button class="sell">Sell</button>
                 </div>
             </div>
-            
+
         </div>
     </div>
+
+    <div class="modal">
+        <i class="fa-solid fa-xmark cancel"></i>
+        <div class="units">
+            <span>No. of Units :</span>
+            <input type="text" class="unit-value" id="unit-value">
+        </div>
+        <div class="buy-sell">
+            <button id="buy-sell" class="buy-sell-button"></button>
+        </div>
+    </div>
+
+    <!-- modal upon clciking buy or sell -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const buyButton = document.querySelector(".buy");
+            const sellButton = document.querySelector(".sell");
+
+            buyButton.addEventListener("click", () => openModal("Buy"));
+            sellButton.addEventListener("click", () => openModal("Sell"));
+
+            function openModal(action) {
+                // Create the modal element
+                const modal = document.createElement("div");
+                modal.className = "modal";
+
+                const cancel = document.createElement("i")
+                cancel.className = "fa-solid fa-xmark cancel";
+                modal.appendChild(cancel)
+
+                // Create the content inside the modal
+                const unitsDiv = document.createElement("div");
+                unitsDiv.className = "units";
+                const unitsLabel = document.createElement("span");
+                unitsLabel.textContent = "No. of Units :";
+                const unitsInput = document.createElement("input");
+                unitsInput.type = "text";
+                unitsInput.className = "unit-value";
+                unitsInput.id = "unit-value";
+                unitsDiv.appendChild(unitsLabel);
+                unitsDiv.appendChild(unitsInput);
+                modal.appendChild(unitsDiv);
+
+                const buySellDiv = document.createElement("div");
+                buySellDiv.className = "buy-sell";
+                const buySellButton = document.createElement("button");
+                buySellButton.id = "buy-sell";
+                buySellButton.className = "buy-sell-button";
+                buySellButton.textContent = action; // Set the button text to Buy or Sell
+                buySellDiv.appendChild(buySellButton);
+                modal.appendChild(buySellDiv);
+
+                
+
+                // but sell button color
+
+                if (buySellButton.textContent === "Buy") {
+                    buySellButton.style.color = "greenyellow"
+                }
+                
+                else{
+                    buySellButton.style.color = "red"
+                }
+                
+                // Append the modal to the body
+                document.body.appendChild(modal);
+                
+                // Display the modal
+                modal.style.display = "block";
+                
+                // <!-- modal cancel -->
+                cancel.addEventListener('click', function(){
+            modal.style.display = "none";
+        })
+            }
+        });
+    </script>
+    <!-- live rate updation -->
+    <script>
+        function updateStockPrice() {
+    // Make an AJAX request to fetch the updated stock price
+    $.ajax({
+        type: 'GET',
+        url: '/get_stock_price/',  // Change this URL to your Django view URL
+        success: function(response) {
+            // Update the stock price in the HTML element with id "stock-price"
+            $('#stock-price').text(response.stock_price);
+            
+            // Call this function again after a delay (e.g., every 5 seconds)
+            setTimeout(updateStockPrice, 5000);  // Update every 5 seconds
+        }
+    });
+}
+
+// Call the updateStockPrice function when the document is ready
+$(document).ready(function() {
+    updateStockPrice();
+});
+
+    </script>
+
 </body>
 
 </html>
