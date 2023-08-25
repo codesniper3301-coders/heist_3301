@@ -1,12 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        body,
+        html {
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .heading {
+            text-align: center;
+            padding: 5px;
+            font-size: 40px;
+        }
+
+        .container {
+            display: flex;
+            margin: 2px;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .com-name {
+            /* border: 1px solid; */
+            font-size: 30px;
+            padding-left: 10px;
+        }
+
+        .rates {
+            /* border: 1px solid; */
+            padding: 5px;
+        }
+
+        .stock-price {
+            /* border: 1px solid; */
+            font-size: 35px;
+        }
+
+        .toggle-per {
+            border: 1px solid rgb(239, 198, 198);
+            padding: 4px;
+            border-radius: 5px;
+            background-color: rgb(239, 198, 198);
+            color: rgb(213, 8, 8);
+        }
+
+        .right-column {
+            padding: 50px 5px;
+            border: 1px solid rgb(193, 190, 190);
+            border-radius: 5px;
+        }
+
+        .right-column * {
+            padding: 10px;
+        }
+
+        .line{
+            border-bottom: 1px solid;
+        }
+
+        .prev-close-box{
+            border-top: 1px solid;
+        }
+
+        @media only screen and (max-width:800px){
+            .container{
+                display: block;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Home page</h1>
-    <a href="/login"><button>Login</button></b></a>
+    <h1 class="heading">StockSlice</h1>
+    <div class="container">
+        <div class="left-column">
+            <div class="com-name"><span>{{stock_name}}</span></div>
+            <div class="rates"><span class="stock-price">{{stock_price}}</span>
+                <span class="toggle-per">{{toggle_per}}</span>
+                <span class="current-price">{{current_price}}</span>
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="prev-close-box line">
+                <span class="prev-close">Previous Close</span>
+                <span class="prev-close-value">{{prev_close}}</span>
+            </div>
+            <div class="day-range-box line"><span class="day-range-value">Day Range</span><span
+                    class="day-range">{{day_range}}</span>
+            </div>
+            <div class="year-range-box line">
+                <span class="year-range-value">Year Range</span>
+                <span class="year-range">{{year_range}}</span>
+            </div>
+            <div class="market-cap-box line">
+                <span class="market-cap-value">Market Cap</span>
+                <span class="market-cap">{{market_cap}}</span>
+            </div>
+            <div class="pre-ratio-box line">
+                <span class="pe-ratio-value">P/E Ratio</span>
+                <span class="pe-ratio">{{pe_ratio}}</span>
+            </div>
+            <div class="div-yield-box line"><span class="div-yield-value">Dividend Yield</span>
+                <span class="div-yield">{{div_yield}}</span>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
