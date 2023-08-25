@@ -88,34 +88,35 @@
     <h1 class="heading">StockSlice</h1>
     <div class="container">
         <div class="left-column">
-            <div class="com-name"><span>{{stock_name}}</span></div>
-            <div class="rates"><span class="stock-price">{{stock_price}}</span>
-                <span class="toggle-per">{{toggle_per}}</span>
-                <span class="current-price">{{current_price}}</span>
+            <div class="com-name"><span>{{stock_detail.stock_name}}</span></div>
+            <div class="rates"><span class="stock-price">{{stock_detail.stock_price}}</span>
+                <span class="toggle-per">{{stock_detail.toggle_per}}</span>
+                <span class="current-price">{{stock_detail.current_price}}</span>
             </div>
         </div>
         <div class="right-column">
             <div class="prev-close-box line">
                 <span class="prev-close">Previous Close</span>
-                <span class="prev-close-value">{{prev_close}}</span>
+                <span class="prev-close-value">{{stock_detail.prev_close}}</span>
             </div>
             <div class="day-range-box line"><span class="day-range-value">Day Range</span><span
-                    class="day-range">{{day_range}}</span>
+                    class="day-range">{{stock_detail.day_range}}</span>
             </div>
             <div class="year-range-box line">
                 <span class="year-range-value">Year Range</span>
-                <span class="year-range">{{year_range}}</span>
+                <span class="year-range">{{stock_detail.year_range}}</span>
             </div>
+            
             <div class="market-cap-box line">
                 <span class="market-cap-value">Market Cap</span>
-                <span class="market-cap">{{market_cap}}</span>
+                <span class="market-cap">{{stock_detail.market_cap}}</span>
             </div>
             <div class="pre-ratio-box line">
                 <span class="pe-ratio-value">P/E Ratio</span>
-                <span class="pe-ratio">{{pe_ratio}}</span>
+                <span class="pe-ratio">{{stock_detail.pe_ratio}}</span>
             </div>
             <div class="div-yield-box line"><span class="div-yield-value">Dividend Yield</span>
-                <span class="div-yield">{{div_yield}}</span>
+                <span class="div-yield">{{stock_detail.div_yield}}</span>
             </div>
         </div>
     </div>
