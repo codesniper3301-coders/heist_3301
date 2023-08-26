@@ -130,7 +130,7 @@
             padding: 10px 5px;
             border: 1px solid rgb(82, 82, 82);
             border-radius: 5px;
-            width: fit-content;
+            width: 100%;
         }
 
         .right-column * {
@@ -242,6 +242,13 @@
             background-color: black;
             color: whitesmoke;
         }
+
+        .stock-unit{
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(63, 63, 63);
+        }
     </style>
 </head>
 
@@ -302,22 +309,16 @@
                     </div>
                 </div>
                 <div class="buy-sell-container">
-                    <button class="buy">Buy</button>
+                    <input type="text" class="stock-unit" id="stock-unit-input" name="fraction_stock">
+                    <input type="hidden" id="calculated-value" name="calculated_value">
+                    <button class="buy" type="button" onclick="calculateAndSubmit()">Buy</button>
                 </div>
+                
             </div>
         </div>
     </div>
 </form>
-    <div class="modal">
-        <i class="fa-solid fa-xmark cancel"></i>
-        <div class="units">
-            <span>No. of Units :</span>
-            <input type="text" class="unit-value" id="unit-value">
-        </div>
-        <div class="buy-sell">
-           <form action="" method="post"> <button id="buy-sell" class="buy-sell-button" type="submit"></button></form>
-        </div>
-    </div>
+    
 
     <!-- modal upon clciking buy or sell -->
     <script>
@@ -407,6 +408,55 @@ $(document).ready(function() {
 });
 
     </script>
+
+    <!-- calculate value  -->
+    <script>
+        function calculateAndSubmit() {
+            var stockUnitInput = document.getElementById('stock-unit-input');
+            var calculatedValueInput = document.getElementById('calculated-value');
+            var stockPrice = {{ stock_detail.stock_price|default:0 }}; // Retrieve the Django variable value
+    
+            var inputValue = parseFloat(stockUnitInput.value);
+            if (!isNaN(inputValue)) {
+                var calculatedValue = inputValue * stockPrice;
+                calculatedValueInput.value = calculatedValue;
+                // Submit the form
+                document.querySelector('form').submit();
+            }
+        }
+    </script>
+
+    <!-- multiply -->
+    <div class="buy-sell-container">
+        <input type="text" class="stock-unit" name="fraction_stock">
+        <button class="buy" type="submit">Buy</button>
+    </div>
+    
+    <script>
+        // Get the input element
+        var stockUnitInput = document.querySelector('.stock-unit');
+    
+        // Add an input event listener to the input field
+        stockUnitInput.addEventListener('input', function(event) {
+            var inputValue = event.target.value;
+    
+            // Remove any non-numeric characters except dot (.)
+            var cleanValue = inputValue.replace(/[^0-9.]/g, '');
+    
+            // If there's more than one dot, remove all but the first one
+            var dotCount = (cleanValue.match(/\./g) || []).length;
+            if (dotCount > 1) {
+                cleanValue = cleanValue.replace(/\./g, function(match, offset) {
+                    return offset === cleanValue.indexOf('.') ? match : '';
+                });
+            }
+    
+            // Update the input field value
+            stockUnitInput.value = cleanValue;
+        });
+    </script>
+    
+    
 
 </body>
 
